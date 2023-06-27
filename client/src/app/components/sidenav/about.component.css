@@ -1,0 +1,37 @@
+.logo {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding-top: 10px;
+}
+
+.img {
+    width: 150px;
+}
+
+.about {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.features {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.header {
+    text-align: center;
+    color: #7B1FA2;
+}
+
+.bottom {
+    margin-bottom: 20px;
+}
+
+p {
+    line-height: 22px;
+}

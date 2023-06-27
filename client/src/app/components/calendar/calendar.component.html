@@ -1,0 +1,49 @@
+<div fxLayout="row" fxLayout.lt-md="column" class="calendar-container">
+    <div fxFlex="100%">
+        <mat-card class="calendar-card">
+            <mat-card-title fxLayout="row" class="title">
+                <span>Calendar of Events</span>
+                <button mat-raised-button type="button" (click)="onMonthSelected()">Month</button>
+                <button mat-raised-button type="button" (click)="onWeekSelected()">Week</button>
+            </mat-card-title>
+            <mat-card-content>
+                <mwl-calendar-month-view
+                    [viewDate]="viewDate"
+                    [events]="events"
+                ></mwl-calendar-month-view>
+            </mat-card-content>
+            <mat-card-content *ngIf= weekSelected>
+                <mwl-calendar-week-view
+                    [viewDate]="viewDate"
+                    [events]="events"
+                ></mwl-calendar-week-view>
+            </mat-card-content> 
+            <mat-card-content *ngIf= daySelected>
+                <mwl-calendar-day-view
+                    [viewDate]="viewDate"
+                    [events]="events"
+                ></mwl-calendar-day-view>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div *ngIf= weekSelected fxFlex="100%" class="calendar-week">
+        <mat-card class="calendar-card">
+            <mat-card-content>
+                <mwl-calendar-week-view
+                    [viewDate]="viewDate"
+                    [events]="events"
+                ></mwl-calendar-week-view>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div *ngIf= daySelected fxFlex="100%" class="calendar-day">
+        <mat-card class="calendar-card">
+            <mat-card-content>
+                <mwl-calendar-day-view
+                    [viewDate]="viewDate"
+                    [events]="events"
+                ></mwl-calendar-day-view>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

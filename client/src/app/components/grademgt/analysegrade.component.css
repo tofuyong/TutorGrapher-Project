@@ -1,0 +1,70 @@
+table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.headers {
+  font-weight: bold;
+  background-color: #673AB7;
+  color: white;
+}
+
+table td, table th {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+}
+
+.icon {
+  width: 25px;
+  object-fit: cover;
+  transition: filter 0.3s;
+}
+
+.icon:hover {
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5)) brightness(60%);
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+}
+
+.chart {
+  padding-top: 15px;
+  padding-bottom: 30px;
+  display: flex;
+}
+
+.delete {
+  width: 25px;
+  object-fit: cover;
+  transition: filter 0.3s;
+  padding: 2px;
+}
+
+.edit {
+  width: 25px;
+  object-fit: cover;
+  transition: filter 0.3s;
+  padding: 2px;
+}
+
+h3 {
+  color: #7B1FA2;
+}
+
+.col-score,
+.col-baseScore,
+.col-percent {
+  text-align: center;
+}
+
+.back-button {
+  bottom: 50px;
+}
+
+.back-button:hover {
+  color: #F29F05;
+}

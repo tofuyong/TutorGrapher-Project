@@ -1,0 +1,60 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="container" *ngIf="contactForm" (click)="resetSuccessMsg()">
+    <h3><b>Contact TutorGrapher</b></h3>
+    <br>
+
+    <form [formGroup]="contactForm" (ngSubmit)="submitContactForm()" fxLayout="column" fxLayoutGap="5px" *ngIf="!isLoading">
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div fxFlex="35%">
+                <mat-form-field appearance="fill" fxFlex="100%">
+                    <mat-label>Date: </mat-label>
+                    <input matInput type="text" formControlName="date" placeholder="Date" readonly> 
+                </mat-form-field>
+            </div>
+            <div fxFlex="65%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Email:</mat-label>
+                    <input matInput type="text" formControlName="email" placeholder="Email">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Name: </mat-label>
+                    <input matInput type="text" formControlName="name" placeholder="Name">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Subject:</mat-label>
+                    <input matInput type="text" formControlName="subject" placeholder="Subject">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Your message:</mat-label>
+                    <textarea 
+                        matInput matTextareaAutosize cols="80" rows="3" 
+                        formControlName="message"
+                        placeholder="Your message">
+                    </textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">Submit</button>
+            <br><br>
+            <span><i>&nbsp;{{ successMsg }}</i></span>
+        </div>
+    </form>
+</div>

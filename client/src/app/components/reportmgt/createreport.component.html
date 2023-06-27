@@ -1,0 +1,93 @@
+<button class="back-button" mat-icon-button [routerLink]="['/analyse-grades', studentId]" matTooltip="Go back to Student's Grades">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button> 
+
+<h3><b>Generate Report Card</b></h3>
+<p>The generated Report Card will look something like this. Please fill up the form fields with the necessary details.
+</p>
+
+<div class="frame">
+    <div *ngIf="reportCardForm">
+        <form [formGroup]="reportCardForm">
+            <div class="row" fxLayout="row" fxLayoutAlign="center center">
+                <p>
+                    <label for="">Title: </label>
+                    <input class="title" type="text" size="40" formControlName="title"
+                        placeholder="Title of Report e.g. Term 1 Report">
+                </p>
+            </div>
+            <div class="row" fxLayout="row">
+                <p>
+                    <label for="">Date: </label>
+                    <input type="date" formControlName="date" placeholder="Date of Report">
+                </p>
+            </div>
+            <p>Student Name: {{ savedStudent.firstName }} {{ savedStudent.lastName }}</p>
+            <p>School: {{ savedStudent.school }}</p>
+            <p>Level: {{ savedStudent.level }} {{ savedStudent.year }} {{ savedStudent.band }}</p>
+
+            <br>
+            <table class="grades-table" id="grades-table">
+                <thead>
+                    <tr>
+                        <th class="col-date">Date</th>
+                        <th class="col-subject">Subject</th>
+                        <th class="col-assessment">Assessment</th>
+                        <th class="col-score">Score</th>
+                        <th class="col-baseScore">Base Score</th>
+                        <th class="col-percent">%</th>
+                        <th class="col-format">Format</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let grade of selectedGrades">
+                        <td class="col-date">{{ grade.date | date:'d MMM yyyy' }}</td>
+                        <td class="col-subject">{{ grade.subject }}</td>
+                        <td class="col-assessment">{{ grade.assessment }}</td>
+                        <td class="col-score">{{ grade.score }}</td>
+                        <td class="col-baseScore">{{ grade.baseScore }}</td>
+                        <td class="col-percent">{{ grade.percentageScore }}</td>
+                        <td class="col-format">{{ grade.format }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <img [src]="chartImageSrc" class="chart">
+            <br><br>
+
+            <div class="row">
+                <p>
+                    <label for="">Academic Feedback: </label>
+                    <textarea cols="80" rows="5" formControlName="academicFeedback"
+                        placeholder="Academic Remarks" maxlength="300"></textarea>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    <label for="">Conduct Feedback: </label>&nbsp;&nbsp;
+                    <textarea cols="80" rows="5" formControlName="conductFeedback"
+                        placeholder="Conduct Remarks" maxlength="300"></textarea>
+                </p>
+            </div>
+            <div class="row" fxLayout="row">
+                <p>
+                    <label for="">Prepared by: </label>
+                    <input type="text" formControlName="preparedBy" placeholder="Name of tutor">
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+
+<div class="bottom">
+    <mat-slide-toggle class="slide" name="save" [(ngModel)]="isSaveReport" (change)="save()">
+        Save a copy of report in account?
+    </mat-slide-toggle>
+    <button mat-raised-button color="primary" class="button" [routerLink]="['/pdf-report', studentId]"
+        (click)="submitReportCardForm()">
+        Generate PDF Report
+    </button>
+</div>

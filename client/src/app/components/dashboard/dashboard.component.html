@@ -1,0 +1,83 @@
+<div class="dashboard">
+
+    <div fxLayout="row" fxLayout.lt-md="column" class="container">
+        <div fxFlex="100%">
+            <mat-card class="top">
+                <mat-card-content class="quote-box">
+                    <h1>{{ currentDay }}, {{ currentDate }}</h1>
+                    <h3 class="quote">
+                        {{ quoteText }}
+                        <br>
+                        <font size="-1">- {{ quoteAuthor }}</font>
+                    </h3>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="container">
+        <div fxFlex="33%">
+            <a [routerLink]="['/student-list']" class="card-link" (click)="onTabChange(0)">
+                <mat-card>
+                    <mat-card-content class="first">
+                        <h2>Current Students:</h2>
+                        <h1>{{ noOfCurrent }}</h1>
+                        <div class="icon-wrapper">
+                            <mat-icon class="icon">people</mat-icon>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+        </div>
+
+        <div fxFlex="33%">
+            <a [routerLink]="['/student-list']" class="card-link" (click)="onTabChange(1)">
+                <mat-card class="second">
+                    <mat-card-content>
+                        <h2>Ex Students:</h2>
+                        <h1>{{ noOfPast }}</h1>
+                        <div class="icon-wrapper">
+                            <mat-icon class="icon">people_outline</mat-icon>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+        </div>
+
+        <div fxFlex="33%">
+            <a [routerLink]="['/report-repository']" class="card-link">
+                <mat-card class="third">
+                    <mat-card-content>
+                        <h2>Saved Reports:</h2>
+                        <h1>{{ reportCount }}</h1>
+                        <div class="icon-wrapper">
+                            <mat-icon class="icon">picture_as_pdf</mat-icon>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+        </div>
+    </div>
+
+    <div *ngIf="allEventsLoaded && !calendarLoading" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="calendar-container">
+        <div fxFlex="100%">
+            <mat-card class="calendar-card">
+                <mat-card-content class="calendar">
+                    <div class="buttons" style="display: flex; justify-content: space-between; align-items: center;">
+                        <button mat-button class="previous" color="warn" (click)="previousMonth()"><mat-icon>chevron_left</mat-icon>Previous</button>
+                        {{ (viewDate | date:'MMMM yyyy') | uppercase }}
+                        <button mat-button class="next" color="primary" (click)="nextMonth()">Next<mat-icon iconPositionEnd>chevron_right</mat-icon></button>
+                    </div>
+                    <mwl-calendar-month-view 
+                        [viewDate]="viewDate" 
+                        [events]="events"
+                        (eventClicked)="handleEvent($event.event)">
+                    </mwl-calendar-month-view>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="calendarLoading" class="loading-container">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+    </div>
+</div>

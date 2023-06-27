@@ -1,0 +1,26 @@
+<div *ngIf="savedObservation" class="container">
+    <h3><b>Edit Class Observation Notes</b></h3>
+    <br>
+    <form [formGroup]="editObservationForm" (ngSubmit)="submitEditObservationForm()">
+        <div class="row" fxLayout="row" fxLayout.lt-md="column">
+            <label class="label">Date: </label>
+            <mat-form-field appearance="outline" fxFlex="40%">
+                <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Date of Observation">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="hasError('date')">Date of observation cannot be before 2020</mat-error>
+            </mat-form-field>
+        </div>
+        <br>
+        <div>
+            <label class="label">Notes: </label>
+            <mat-form-field appearance="outline" fxFlex="70%"> 
+                <textarea matInput matTextareaAutosize cols="80" rows="6" formControlName="notes" placeholder="Observation Notes"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button color="accent" type="button" [routerLink]="['/observation-list', studentId]">Back</button>&nbsp;
+            <button mat-raised-button color="primary" type="submit" [disabled]="editObservationForm.invalid || !editObservationForm.dirty">Submit</button>
+        </div>
+    </form>
+</div>

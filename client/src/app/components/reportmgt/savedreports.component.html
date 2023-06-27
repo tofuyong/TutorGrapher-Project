@@ -1,0 +1,41 @@
+<button class="back-button" mat-icon-button [routerLink]="['/select-student']" matTooltip="Go back to select Student">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button>
+
+<div *ngIf="student" class="container">
+    <h3 class="title"><b>
+        Saved Report Cards for {{student.firstName}} {{student.lastName}}
+    </b></h3>
+
+    <table>
+        <thead class="headers">
+            <td class="index">#</td>
+            <td class="date">Date</td>
+            <td class="notes">Reports</td>
+            <td></td>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="reports?.length; else noReports">
+                <tr *ngFor="let rp of reports; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ rp.date | date:'d MMM yyyy'}}</td>
+                    <td>
+                        <a href="{{rp.reportUrl}}"
+                        target="_blank">{{ rp.studentFirstName }}{{ rp.studentLastName }}{{ rp.reportId }}.pdf</a>
+                    </td>
+                    <td>
+                        <a (click)="confirmDelete(rp.reportId)" style="cursor: pointer;">
+                            <mat-icon class="icon" matTooltip="Delete report" color="warn">delete_forever</mat-icon>
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-template #noReports>
+                <tr>
+                    <td colspan="8"><i>No reports saved for student</i></td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+
+</div>

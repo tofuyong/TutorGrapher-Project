@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.container {
+    padding: 10px 20px 10px 20px;
+}
+
+.first {
+    background: #F2D0E3;
+}
+
+.second {
+    background: #D1A0F2;
+}
+
+.third {
+    background: #B562D9;
+}
+
+.fourth {
+    background: #D6C1D9;
+}
+
+.icon {
+    transform: scale(2);
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 15px;
+}
+
+.card-link,
+.card-link:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-link:hover {
+    transition: filter 0.2s;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.6)) brightness(105%);
+}
+
+mat-card {
+    height: 100%; 
+}
+
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.icon-wrapper {
+    align-self: flex-end;
+}
+
+.top {
+    background-image: url('/assets/images/main-greypurpleorange-cropped.jpg');
+    background-size: cover;
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.quote-box {
+    position: absolute;
+    width: 40%;
+    right: -40px;
+    height: 170px;
+    background-color: lightgrey;
+    transform: skewX(-20deg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 50px 20px 20px;
+}
+
+.quote-box > * {
+    transform: skewX(20deg);
+}
+
+.quote {
+    font-family: 'Montserrat', sans-serif;
+    padding-left: 20px;
+}
+
+.calendar {
+    width: 85%;
+    margin: auto;
+}
+
+.calendar-container {
+    padding: 10px 20px 40px 20px;
+}
+
+:host ::ng-deep .cal-day-badge {
+    background-color: lightgrey !important;
+    display: none !important;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+

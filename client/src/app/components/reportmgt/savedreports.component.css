@@ -1,0 +1,42 @@
+.container {
+    margin-left: 40px;
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #7B1FA2;
+}
+
+table td,
+table th {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.icon {
+    width: 30px;
+    object-fit: cover;
+    transition: filter 0.3s;
+}
+
+.icon:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5)) brightness(60%);
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: black;
+}
+
+.back-button {
+    bottom: 50px;
+}
+
+.back-button:hover {
+    color: #F29F05;
+}

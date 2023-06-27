@@ -1,0 +1,88 @@
+<div *ngIf="savedTutor" class="container">
+    <h3><b>Edit Profile</b></h3>
+
+    <div class="image-container">
+        <img *ngIf="tutorPhoto && !photoRemoved" 
+            class="profilepic"
+            [src]="isPhotoUpdated ? tutorPhoto : 'data:image/jpeg;base64,' + tutorPhoto" 
+            alt="Tutor's photo">
+        <img *ngIf="photoRemoved || !tutorPhoto" 
+            class="nopic" 
+            src="/assets/images/unknown.png" 
+            alt="no photo">
+    </div>
+
+    <div class="button-row">
+        <input type="file" #fileInput style="display: none" (change)="updatePhoto($event)" accept="image/*"/>
+        <button mat-button (click)="fileInput.click()">Choose a Photo</button>
+        <button mat-button (click)="removePhoto()" [disabled]="!tutorPhoto">Remove</button>
+    </div>
+
+    <br>
+    
+    <form [formGroup]="tutorForm" (ngSubmit)="submitTutorForm()" fxLayout="column" fxLayoutGap="16px">
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px">
+            <div class="col s12 m6" fxFlex="20%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Salutation</mat-label>
+                    <mat-select formControlName="salutation">
+                        <mat-option value="" disabled>Select salutation</mat-option>
+                        <mat-option value="Miss.">Miss.</mat-option>
+                        <mat-option value="Ms.">Ms.</mat-option>
+                        <mat-option value="Mrs.">Mrs.</mat-option>
+                        <mat-option value="Mdm.">Mdm.</mat-option>
+                        <mat-option value="Mr.">Mr.</mat-option>
+                        <mat-option value="Dr.">Dr.</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('salutation')">Please select a salutation</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="40%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" formControlName="firstName" placeholder="First Name">
+                    <mat-error *ngIf="hasError('firstName')">First name is mandatory</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="40%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" formControlName="lastName" placeholder="Last Name">
+                    <mat-error *ngIf="hasError('lastName')">Last name is mandatory</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px">
+            <div class="col s12 m6" fxFlex="40%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Mobile Number</mat-label>
+                    <input matInput type="text" formControlName="phone" placeholder="8-digit mobile number">
+                    <mat-error *ngIf="hasError('phone')">Input an 8-digit mobile number</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col s12" fxFlex="60%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email"
+                           formControlName="email" 
+                           placeholder="Email"
+                           />
+                    <mat-error *ngIf="tutorForm.get('email')?.hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="tutorForm.get('email')?.hasError('ValidEmail')">
+                        Please enter a valid email address
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <button mat-raised-button type="button" color="accent" [routerLink]="['/dashboard']">Back</button>&nbsp;
+                <button mat-raised-button type="submit" color="primary">Save changes</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,29 @@
+.container {
+  text-align: center;
+  width: 70%;
+  margin: auto;
+}
+
+h3 {
+  color: #7B1FA2;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.profilepic {
+  width: 200px;
+}
+
+.nopic {
+  width: 180px;
+}
+
+.success-note {
+  margin-top: 10px;
+  font-style: italic;
+}

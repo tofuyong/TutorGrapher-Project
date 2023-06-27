@@ -1,0 +1,243 @@
+<div (click)="resetSuccessMsg()">
+<mat-tab-group [color]="'primary'" (selectedIndexChange)="changeTab($event)" [selectedIndex]="tabIndex$ | async">
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>people</mat-icon> &nbsp; Current Students
+        </ng-template>
+      <table>
+        <thead>
+            <tr class="headers">
+                <td>#</td>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Gender</td>
+                <td>School</td>
+                <td>Level</td>
+                <td>Year</td>
+                <td>Stream</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of currentStudents | slice: (currentPage)*pageSize : (currentPage+1)*pageSize; let i = index" 
+            [routerLink]="['/student', student.studentId]" class="clickable-row" matTooltip="Student Details">
+                <td class="index">{{ i + 1 + (currentPage * pageSize) }}</td>
+                <td>{{ student.studentId }}</td>
+                <td>{{ student.firstName | titlecase }} {{ student.lastName | titlecase }}</td> 
+                <td>{{ student.gender }}</td>
+                <td>{{ student.school }}</td>
+                <td>{{ student.level }}</td>
+                <td>{{ student.year }}</td>
+                <td>{{ student.band }}</td>
+                <td>
+                    <a [routerLink]="['/analyse-grades', student.studentId]" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Student grades" color="primary">insert_chart</mat-icon>
+                    </a>
+                    <a [routerLink]="['/observation-list', student.studentId]" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Observation notes" color="accent">insert_comment</mat-icon>
+                    </a>
+                    <a (click)="confirmDelete(student.studentId)" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Delete student record" color="warn">delete_forever</mat-icon>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+
+    </mat-tab>
+    
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>people_outline</mat-icon> &nbsp; Ex-Students
+        </ng-template>
+      <table>
+        <thead>
+            <tr class="headers">
+                <td class="index">#</td>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Gender</td>
+                <td>School</td>
+                <td>Level</td>
+                <td>Year</td>
+                <td>Stream</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of pastStudents | slice: (currentPage)*pageSize : (currentPage+1)*pageSize; let i = index"
+            [routerLink]="['/student', student.studentId]" class="clickable-row" matTooltip="Student Details">
+                <td>{{ i + 1 + (currentPage * pageSize) }}</td>
+                <td>{{ student.studentId }}</td>
+                <td>{{ student.firstName | titlecase }} {{ student.lastName | titlecase }}</td> 
+                <td>{{ student.gender }}</td>
+                <td>{{ student.school }}</td>
+                <td>{{ student.level }}</td>
+                <td>{{ student.year }}</td>
+                <td>{{ student.band }}</td>
+                <td>
+                    <a [routerLink]="['/analyse-grades', student.studentId]" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Student grades" color="primary">insert_chart</mat-icon>
+                    </a>
+                    <a [routerLink]="['/observation-list', student.studentId]" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Observation notes" color="accent">insert_comment</mat-icon>
+                    </a>
+                    <a (click)="confirmDelete(student.studentId)" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Delete student record" color="warn">delete_forever</mat-icon>
+                    </a>
+                </td>
+            </tr>
+        </tbody>     
+      </table>
+    </mat-tab>
+
+    
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>person_add</mat-icon> &nbsp; Add new student
+        </ng-template>
+        <div class="form">
+            <form [formGroup]="studentForm" (ngSubmit)="submitStudentForm()" fxLayout="column" fxLayoutGap="10px">
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">First Name:</mat-label>
+                            <input matInput type="text" formControlName="firstName" placeholder="First Name">
+                            <mat-error *ngIf="hasError('firstName')">First name is mandatory</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Last Name:</mat-label>
+                            <input matInput type="text" formControlName="lastName" placeholder="Last Name">
+                            <mat-error *ngIf="hasError('lastName')">Last name is mandatory</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Select status</mat-label>
+                            <mat-select formControlName="isActive">
+                                <mat-option value="" disabled selected>Select Status</mat-option>
+                                <mat-option value="true">Current Student</mat-option>
+                                <mat-option value="false">Ex Student</mat-option>
+                            </mat-select>
+                        <mat-error *ngIf="hasError('isActive')">Please select student status</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Select gender</mat-label>
+                            <mat-select formControlName="gender">
+                                <mat-option value="" disabled selected>Select Gender</mat-option>
+                                <mat-option value="Male">Male</mat-option>
+                                <mat-option value="Female">Female</mat-option>
+                            </mat-select>
+                        <mat-error *ngIf="hasError('gender')">Please select student gender</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Date of Birth:</mat-label>
+                            <input matInput type="date" formControlName="dob" placeholder="Birthday">
+                            <mat-error *ngIf="hasError('dob')">Birthday cannot be later than today</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Mobile Number:</mat-label>
+                            <input matInput type="text" formControlName="phone" placeholder="8-digit mobile number">
+                            <mat-error *ngIf="hasError('phone')">Input an 8-digit mobile number beginning with 8 or 9</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="65%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">School:</mat-label>
+                            <input matInput type="text" formControlName="school" placeholder="School">
+                            <mat-error *ngIf="hasError('school')">School is mandatory, or else indicate 'N.A.'</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="35%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">CCA:</mat-label>
+                            <input matInput type="text" formControlName="cca" placeholder="CCA">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="30%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Select Level</mat-label>
+                            <mat-select formControlName="level" (selectionChange)="onLevelSelection($event)">
+                                <mat-option value="" disabled selected>Select Level</mat-option>
+                                <mat-option value="Primary">Primary</mat-option>
+                                <mat-option value="Secondary">Secondary</mat-option>
+                                <mat-option value="JC">Junior College</mat-option>
+                                <mat-option value="Polytechnic">Polytechnic</mat-option>
+                                <mat-option value="University">University</mat-option>
+                            </mat-select>
+                        <mat-error *ngIf="hasError('level')">Please select level</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="20%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Select Year</mat-label>
+                            <mat-select formControlName="year">
+                                <mat-option value="" disabled selected>Year</mat-option>
+                                <mat-option *ngFor="let year of yearOptions" [value]="year">{{ year }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="hasError('year')">Please select year</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col s12 m6" fxFlex="50%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Select Stream</mat-label>
+                            <mat-select formControlName="band">
+                                <mat-option value="" disabled selected>Select Stream</mat-option>
+                                <mat-option *ngFor="let stream of streamOptions" [value]="stream">{{ stream }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="hasError('band')">Please select stream</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div class="col s12 m6" fxFlex="100%">
+                        <mat-form-field appearance="outline" fxFlex="100%">
+                            <mat-label class="label">Interests:</mat-label>
+                            <textarea 
+                                matInput matTextareaAutosize cols="80" rows="2" 
+                                formControlName="interests"
+                                placeholder="Student's interests e.g. bowling, comics">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            
+                <div class="buttons">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="studentForm.invalid">Submit</button>
+                    <span><i>&nbsp;{{ successMsg }}</i></span>
+                </div>
+            </form>
+        </div>
+    </mat-tab>
+    
+</mat-tab-group>
+
+<mat-paginator *ngIf="activeTabIndex < 2" 
+    [hidePageSize]="false"
+    [showFirstLastButtons]="true"
+    [pageSize]="pageSize"
+    [pageIndex]="currentPage"
+    [length]="getActiveTabLength()"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+    class="paginator"
+    ></mat-paginator>
+
+</div>

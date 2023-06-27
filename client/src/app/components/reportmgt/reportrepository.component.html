@@ -1,0 +1,41 @@
+<div class="container">
+    <h3><b>All Saved Report Cards</b></h3>
+
+
+<table>
+    <thead class="headers">
+        <td class="index">#</td>
+        <td class="studentId">Student ID</td>
+        <td class="student">Student</td>
+        <td class="date">Date</td>
+        <td class="report">Report</td>
+        <td></td>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="reports?.length; else noReports">
+            <tr *ngFor="let rp of reports; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ rp.studentId }}</td>
+                <td>{{ rp.studentFirstName }} {{ rp.studentLastName }}</td>
+                <td>{{ rp.date | date:'d MMM yyyy':'Asia/Singapore'}}</td>
+                <td>
+                    <a href="{{rp.reportUrl}}"
+                    target="_blank"
+                    matTooltip="Retrieve report">{{ rp.studentFirstName }}{{ rp.studentLastName }}{{ rp.reportId }}.pdf</a>
+                </td>
+                <td>
+                    <a (click)="confirmDelete(rp.reportId)" style="cursor: pointer;">
+                        <mat-icon class="icon" matTooltip="Delete report" color="warn">delete_forever</mat-icon>
+                    </a>
+                </td>
+            </tr>
+        </ng-container>
+        <ng-template #noReports>
+            <tr>
+                <td colspan="8"><i>No saved report cards</i></td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>   
+
+</div>

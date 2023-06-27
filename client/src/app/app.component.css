@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  height: 100vh;
+  background-color:white;
+}
+
+.sidebar {
+  width: 300px;
+  background-color:#D6C1D9;
+  font-family: Arial, sans-serif;
+  font-size: medium;
+}
+
+.content {
+  flex: 1;
+  padding: 20px; 
+}
+
+.goodday {
+  padding-top: 30px;
+}
+
+.greetings{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tutor-img {
+  width: 120px; 
+  height: 120px;
+  border-radius: 50%; 
+  object-fit: cover;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mat-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: medium;
+}
+
+.icon {
+  font-size: 22px;  
+}
+
+.dashboard,
+.directory,
+.navigation,
+.report,
+.calendar {
+  padding-left: 40px;
+  padding-top: 5px;
+}
+
+.top-bar {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dashboard p,
+.directory p,
+.navigation p,
+.report p,
+.calendar p {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar a:hover {
+  color: #7B1FA2;
+  font-weight: bold
+}
+
+.dashboard:hover,
+.directory:hover,
+.navigation:hover,
+.report:hover,
+.calendar:hover {
+  color: #7B1FA2;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  width: 30px;
+}
+
+.bottom {
+  position: absolute;
+  left: 55px;
+  bottom: 10px; 
+  text-align: center;
+}
+
+.brandname {
+  font-family: 'Archvio', serif;
+  font-size: medium;
+}
+
+.links {
+  margin: 0;
+  padding: 0;
+}
+
+.active a {
+  color: #7B1FA2;
+  font-weight: bold;
+}
+
+.active {
+  color: #7B1FA2;
+  font-weight: bold;
+}
+
+.icon:hover {
+  color: #F29F05;
+}

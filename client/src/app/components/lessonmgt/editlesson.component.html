@@ -1,0 +1,97 @@
+<div *ngIf="savedLesson" class="container">
+    <h3><b>Edit Lesson Details</b></h3>
+    <br>
+
+    <form [formGroup]="editLessonForm" (ngSubmit)="submitEditLessonForm()" fxLayout="column" fxLayoutGap="16px">
+        <input type="text" formControlName="lessonId" [hidden]="true">
+        <input type="text" formControlName="studentId" [hidden]="true">
+        
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div class="col s12 m6" fxFlex="50%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Subject: </mat-label>
+                    <input matInput type="text" formControlName="subject" placeholder="Subject" maxlength="25">
+                    <mat-error *ngIf="hasError('subject')">Subject is mandatory</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="50%">
+                
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Day of Week: </mat-label>
+                    <mat-select formControlName="dayOfWeek">
+                        <mat-option value="" disabled selected>Select Day</mat-option>
+                        <mat-option value="Monday">Monday</mat-option>
+                        <mat-option value="Tuesday">Tuesday</mat-option>
+                        <mat-option value="Wednesday">Wednesday</mat-option>
+                        <mat-option value="Thursday">Thursday</mat-option>
+                        <mat-option value="Friday">Friday</mat-option>
+                        <mat-option value="Saturday">Saturday</mat-option>
+                        <mat-option value="Sunday">Sunday</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('dayOfWeek')">Please select day of week</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div class="col s12 m6" fxFlex="50%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Start Time: </mat-label>
+                    <input matInput type="time" formControlName="startTime" placeholder="Start Time">
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="50%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">End Time: </mat-label>
+                    <input matInput type="time" formControlName="endTime" placeholder="End Time">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div class="col s12 m6" fxFlex="50%">
+                <mat-form-field appearance="fill" fxFlex="100%">
+                    <mat-label class="label">Duration(h):</mat-label>
+                    <input matInput type="text" formControlName="duration" readonly>
+                    <mat-error *ngIf="hasError('duration')">Please key in duration</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="50%">
+                
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Hourly Rate($/h):</mat-label>
+                    <input matInput type="number" formControlName="hourlyRate">
+                    <mat-error *ngIf="hasError('hourlyRate')">Please key in hourly rate</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+            <div class="col s12 m6" fxFlex="60%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Address: </mat-label>
+                    <input matInput type="text" formControlName="address" placeholder="Address">
+                </mat-form-field>
+            </div>
+            <div class="col s12 m6" fxFlex="40%">
+                <mat-form-field appearance="outline" fxFlex="100%">
+                    <mat-label class="label">Postal Code: </mat-label>
+                    <input matInput type="text" formControlName="postalCode" placeholder="Postal Code">
+                    <mat-error *ngIf="hasError('postalCode')">Please key in valid 6-digit postal code</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <button mat-raised-button color="accent" type="button" [routerLink]="['/student', studentId]">Back</button> &nbsp;
+                <button mat-raised-button color="primary" type="submit" [disabled]="editLessonForm.invalid || !editLessonForm.dirty">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+

@@ -1,0 +1,38 @@
+<div class="container">
+    <h3><b>Select Student</b></h3>
+    <mat-form-field appearance="fill" [formGroup]="selectStudentForm" style="width: 35%;">
+        <mat-label>Status</mat-label> 
+        <mat-select formControlName="isActive">
+            <mat-option value="true"><mat-icon>people</mat-icon>Current Students</mat-option>
+            <mat-option value="false"><mat-icon>people_outline</mat-icon>Ex-Students</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill" [formGroup]="selectStudentForm" style="width: 35%;">
+        <mat-label>Student</mat-label>
+        <mat-select formControlName="studentId">
+            <ng-container *ngIf="studentsToDisplay.length > 0; else noStudentsMessage">
+                <mat-option *ngFor="let student of studentsToDisplay" [value]="student.studentId">
+                    {{ student.studentId }} - {{ student.firstName }} {{ student.lastName }}
+                </mat-option>
+            </ng-container>
+            <ng-template #noStudentsMessage>
+                <mat-option disabled>No student in record. Navigate to 'Student Directory' to add a student.</mat-option>
+            </ng-template>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill" [formGroup]="selectStudentForm" style="width: 35%;">
+        <mat-label>Navigate to</mat-label>
+        <mat-select formControlName="component">
+            <mat-option value="detail"><mat-icon>person_pin</mat-icon>Student Details</mat-option>
+            <mat-option value="grade"><mat-icon>insert_chart</mat-icon>Grade Analysis</mat-option>
+            <mat-option value="observation"><mat-icon>comment</mat-icon>Observation Notes</mat-option>
+            <mat-option value="report"><mat-icon>picture_as_pdf</mat-icon>Saved Reports</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p>
+        <button mat-flat-button color="primary" type="submit" (click)="submit()" [disabled]="selectStudentForm.invalid">Submit</button>
+    </p>
+</div>
+

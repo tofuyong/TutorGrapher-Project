@@ -1,0 +1,92 @@
+<button class="back-button" mat-icon-button [routerLink]="['/student-list']" matTooltip="Go back to Student List">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button> 
+<div *ngIf="student" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" class="grid-container">
+    <div fxFlex="40%">
+    <mat-card class="student-profile-card">
+        <mat-card-title fxLayout="row" class="title">
+            <span>Personal Details</span>
+            <a class="edit" [routerLink]="['/edit-student', studentId]"><mat-icon color="primary">edit</mat-icon></a>
+        </mat-card-title>
+        <mat-card-content>
+            <table class="student-details-table">
+                <tr>
+                    <td>First Name: </td>
+                    <td>{{ student.firstName }} </td>
+                </tr>
+                <tr>
+                    <td>Last Name: </td>
+                    <td>{{ student.lastName }} </td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <mat-chip [ngClass]="{ 'chip-active': student.isActive, 'chip-inactive': !student.isActive }">{{ student.isActive ? 'Active' : 'Inactive' }}</mat-chip>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td>{{ student.gender | titlecase }} </td>
+                </tr>
+                <tr>
+                    <td>Date of Birth:</td>
+                    <td>{{ student.dob | date:'d MMMM yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td>Mobile: </td>
+                    <td>{{ student.phone }} </td>
+                </tr>
+                <tr>
+                    <td>School: </td>
+                    <td>{{ student.school }} </td>
+                </tr>
+                <tr>
+                    <td>Level: </td>
+                    <td>{{ student.level }} </td>
+                </tr>
+                <tr>
+                    <td>Year: </td>
+                    <td>{{ student.year }} </td>
+                </tr>
+                <tr>
+                    <td>Stream: </td>
+                    <td>{{ student.band }} </td>
+                </tr>
+                <tr>
+                    <td>CCA: </td>
+                    <td>{{ student.cca }} </td>
+                </tr>
+                <tr>
+                    <td>Interests: </td>
+                    <td>{{ student.interests }} </td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+    </div>
+
+    <div fxFlex="60%">
+        <mat-card class="lesson-details-card">
+            <mat-card-title fxLayout="row" class="title">
+                <span>Lesson Details</span>
+                <a [routerLink]="['/edit-lesson', studentId]"><mat-icon color="primary">edit</mat-icon></a>
+            </mat-card-title>
+            <mat-card-content> 
+                <div class="card-contents" *ngIf="lesson else noLesson">
+                    <div class="flex">
+                        <p>Subject: {{ lesson.subject }} | Rate: ${{ lesson.hourlyRate }}/h</p>
+                    </div>
+                    <div class="flex">
+                        <p>Frequency: Every {{ lesson.dayOfWeek }} | {{ lesson.startTime }} - {{ lesson.endTime }} ({{ lesson.duration }})</p>
+                    </div>
+                    <div class="iframe-container">
+                        <iframe width="100%" height="100%" style="border:0"
+                        [src]="lesson.address ? googleMapsUrl : blankImageUrl" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <ng-template #noLesson>No lesson details at the moment</ng-template>
+            </mat-card-content> 
+        </mat-card>
+    </div>
+</div>

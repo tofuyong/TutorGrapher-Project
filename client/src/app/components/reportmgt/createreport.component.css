@@ -1,0 +1,75 @@
+.chart {
+    width: 55vw;
+}
+
+.frame {
+    width: 60vw;
+    border: 1px solid black;
+    padding: 20px;
+    margin: auto; 
+    margin-top: 20px;
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px; 
+    padding-bottom: 50px;
+}
+
+h3 {
+    color: #7B1FA2;
+}
+
+p {
+    display: flex;
+    align-items: center;
+}
+
+label {
+    padding-right: 5px;
+}
+
+.frame label,
+.frame input,
+.frame textarea {
+  font-family: Arial, sans-serif;
+}
+
+.grades-table {
+    margin-left: 15px;
+}
+
+.grades-table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 90%;
+    table-layout: fixed;
+}
+
+td {
+    text-align: center;
+}
+
+.grades-table .col-date,
+.grades-table .col-subject,
+.grades-table .col-assessment,
+.grades-table .col-format { 
+    width: 15%;
+}
+
+.grades-table .col-score,
+.grades-table .col-baseScore,
+.grades-table .col-percent {
+    width: 10%;
+}
+
+.back-button {
+    bottom: 50px;
+}
+
+.back-button:hover {
+    color: #F29F05;
+}

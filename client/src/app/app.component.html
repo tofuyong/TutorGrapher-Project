@@ -1,0 +1,72 @@
+<ng-container *ngIf="!isLoggedIn; else appContent">
+  <app-login></app-login>
+</ng-container>
+
+<ng-template #appContent>
+  <mat-sidenav-container class="container">
+    <mat-sidenav mode="side" [opened]="isLoggedIn" class="sidebar">
+      <div class="sidenav-content" *ngIf="isLoggedIn && tutorId !==0">
+        <div class="greetings">
+          <p class="goodday"><b>Good Day, {{ tutorSalutation }} {{ tutorFirstName }} {{ tutorLastName }}!</b></p>
+          <img *ngIf="tutorPhoto" class="tutor-img" [src]="'data:image/jpeg;base64,' + tutorPhoto" alt="Tutor's Photo">
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="dashboard" routerLinkActive="active">
+          <p>
+            <mat-icon>dashboard</mat-icon>
+            <a mat-button class="text" [routerLink]="['/dashboard']">Dashboard</a>
+          </p>
+        </div>
+
+        <div class="directory" routerLinkActive="active">
+          <p>
+            <mat-icon>people</mat-icon>
+            <a mat-button class="text" [routerLink]="['/student-list']">Student Directory</a>
+          </p>
+        </div>
+
+        <div class="navigation" routerLinkActive="active">
+          <p>
+            <mat-icon>search</mat-icon>
+            <a mat-button class="text" [routerLink]="['/select-student']">Student Navigation</a>
+          </p>
+        </div>
+
+        <div class="report" routerLinkActive="active">
+          <p>
+            <mat-icon>storage</mat-icon>
+            <a mat-button class="text" [routerLink]="['/report-repository']">Report Repository</a>
+          </p>
+        </div>
+
+        <div class="bottom">
+          <span>
+            <img class="logo" src="/assets/images/chart2.png" alt="logo">
+            <h5 class="brandname">&#169; 2023 TutorGrapher</h5>
+            <h5 class="links"><a [routerLink]="['/about']">About</a> | <a [routerLink]="['/contact']">Contact</a>
+            </h5>
+          </span>
+        </div>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content">
+      <div class="top-bar" *ngIf="isLoggedIn && tutorId !==0">
+        <div class="icons">
+          <button mat-icon-button (click)="toTutorProfile()" class="icon" matTooltip="Account details">
+            <mat-icon class="icon">account_circle</mat-icon>
+          </button>
+          <button mat-icon-button (click)="logout()" class="icon" matTooltip="Log out">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>

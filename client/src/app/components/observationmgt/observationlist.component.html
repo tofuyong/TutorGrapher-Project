@@ -1,0 +1,45 @@
+<button class="back-button" mat-icon-button [routerLink]="['/student-list']" matTooltip="Go back to Student List">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button>
+
+<div *ngIf="student" class="container">
+    <h3 class="header"><b>
+            {{student.firstName}} {{student.lastName}} | {{student.school}} | {{student.level}} {{student.year}}
+            {{student.band}}
+        </b></h3>
+
+    <table>
+        <thead class="headers">
+            <td class="index">#</td>
+            <td class="date">Date</td>
+            <td class="notes">Notes</td>
+            <td class="action">Actions</td>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="observations?.length; else noObservations">
+                <tr *ngFor="let ob of observations; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ ob.date | date:'d MMM yyyy':'Asia/Singapore'}}</td>
+                    <td>{{ ob.notes }}</td>
+                    <td>
+                        <a [routerLink]="['/edit-observation', student.studentId, ob.observationId]"
+                            style="cursor: pointer;">
+                            <mat-icon class="edit" matTooltip="Edit observation" color="primary">edit</mat-icon>
+                        </a>
+                        <a (click)="confirmDelete(ob.observationId)" style="cursor: pointer;">
+                            <mat-icon class="delete" matTooltip="Delete observation"
+                                color="warn">delete_forever</mat-icon>
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-template #noObservations>
+                <tr>
+                    <td colspan="8"><i>No observations added for student</i></td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+    <button mat-raised-button color="primary" (click)="addObservation()">Add Observation</button>
+</div>
+

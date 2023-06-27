@@ -1,0 +1,24 @@
+<div class="background">
+
+    <div fxLayout="row" fxLayout.lt-md="column" class="container">
+        <div fxFlex="100%">
+            <mat-card class="card">
+                <mat-card-content>
+                    <img class="logo" src="/assets/images/chart2.png" alt="logo">
+                    <h2 class="welcome-msg">Welcome back to TutorGrapher!</h2>
+                    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+                        <mat-form-field appearance="fill" style="width: 70%;">
+                            <mat-label>Tutor ID</mat-label>
+                            <input matInput type="text" formControlName="tutorId">
+                        </mat-form-field>
+                        <br>
+                        <button mat-raised-button color="primary" type="submit">Log in</button>
+                        <br><br>
+                        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+</div>

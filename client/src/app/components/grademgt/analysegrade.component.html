@@ -1,0 +1,70 @@
+<button class="back-button" mat-icon-button [routerLink]="['/student-list']" matTooltip="Go back to Student List">
+    <mat-icon>arrow_back_ios</mat-icon>
+</button>
+
+<div *ngIf="student && grades">
+    <h3 class="header"><b>
+            {{student.firstName}} {{student.lastName}} | {{student.school}} | {{student.level}} {{student.year}}
+            {{student.band}}
+        </b></h3>
+
+
+    <table>
+        <thead class="headers">
+            <td>
+                <mat-checkbox [(ngModel)]="selectAllGrades" (change)="selectAll()"></mat-checkbox>
+            </td>
+            <td>Date</td>
+            <td>Subject</td>
+            <td>Assessment</td>
+            <td class="col-score">Score</td>
+            <td class="col-baseScore">Base Score</td>
+            <td class="col-percent">%</td>
+            <td>Format</td>
+            <td>Actions</td>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="grades?.length; else noGrades">
+                <tr *ngFor="let grade of grades">
+                    <td>
+                        <mat-checkbox name="grade" [checked]="selectedGrades.includes(grade)"
+                            (change)="onSelectGrade(grade)"></mat-checkbox>
+                    </td>
+                    <td>{{ grade.date | date:'d MMM yyyy':'Asia/Singapore' }}</td>
+                    <td>{{ grade.subject }}</td>
+                    <td>{{ grade.assessment }}</td>
+                    <td class="col-score">{{ grade.score }}</td>
+                    <td class="col-baseScore">{{ grade.baseScore }}</td>
+                    <td class="col-percent">{{ grade.percentageScore }}</td>
+                    <td>{{ grade.format }}</td>
+                    <td>
+                        <a [routerLink]="['/edit-grade', student.studentId, grade.gradeId]" style="cursor: pointer;">
+                            <mat-icon class="edit" matTooltip="Edit grade" color="primary">edit</mat-icon>
+                        </a>&nbsp;
+                        <a (click)="confirmDelete(grade.gradeId)" style="cursor: pointer;">
+                            <mat-icon class="delete" matTooltip="Delete grade" color="warn">delete_forever</mat-icon>
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-template #noGrades>
+                <tr>
+                    <td colspan="8"><i>No results added for student</i></td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</div>
+<button mat-raised-button color="primary" [routerLink]="['/add-grade', studentId]">Add Grade</button>&nbsp;
+<button mat-raised-button color="accent" (click)="toAnalyse(selectedGrades)"
+    [disabled]="selectedGrades.length === 0">Analyse Selected Grades</button>&nbsp;
+<button *ngIf="isChartReady" mat-raised-button color="warn" [routerLink]="['/create-report-card', studentId]"
+    (click)="toGenerateReport()">Use Chart for Report Card</button>
+
+<br><br>
+
+<div class="chart" *ngIf="isChartReady" style="display: block;">
+    <canvas #chart baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        [legend]="barChartLegend" [type]="'bar'" style="display: block; width: 65vw;">
+    </canvas>
+</div>
