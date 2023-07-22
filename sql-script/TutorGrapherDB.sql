@@ -1,4 +1,6 @@
-use railway;
+CREATE DATABASE IF NOT EXISTS tutorgrapher;
+
+USE tutorgrapher;
 
 CREATE TABLE tutor (
     tutorId INT NOT NULL AUTO_INCREMENT,
@@ -12,7 +14,7 @@ CREATE TABLE tutor (
 );
 
 INSERT INTO tutor (firstName, lastName, salutation, phone, email)
-VALUES ('Tofu', 'Yong', 'Ms.', 91112222, 'tofuyong@gmail.com');
+VALUES ('Tofu', 'Cube', 'Ms.', 91112222, 'tofuyong@gmail.com');
 
 CREATE TABLE student (
     studentId INT NOT NULL,
@@ -36,19 +38,19 @@ CREATE TABLE student (
 );
 
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50001', true, 'Pebbles', 'Flintstone', 'Female', '1963-02-12', '91112222', 'pebblesflintstone@students.com', 'Punggol Secondary School', 'Secondary', 1, 'Express', 'Outdoor Activity Club', 'Rock climbing', 5);
+VALUES ('10001', true, 'Pebbles', 'Flintstone', 'Female', '1963-02-12', '91112222', 'pebblesflintstone@students.com', 'Punggol Secondary School', 'Secondary', 1, 'Express', 'Outdoor Activity Club', 'Rock climbing', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50002', true, 'Bugs', 'Bunny', 'Male', '1940-07-27', '91113333', 'bugsbunny@students.com', 'Broadrick Secondary School', 'Secondary', 1, 'Express', 'Cooking Club', 'Eating Carrots', 5);
+VALUES ('10002', true, 'Bugs', 'Bunny', 'Male', '1940-07-27', '91113333', 'bugsbunny@students.com', 'Broadrick Secondary School', 'Secondary', 1, 'Express', 'Cooking Club', 'Eating Carrots', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50003', true, 'Daffy', 'Duck', 'Male', '1937-04-17', '91114444', 'daffyduck@students.com', 'Dunman High', 'Secondary', 1, 'Express', 'Swimming Club', 'Water Polo', 5);
+VALUES ('10003', true, 'Daffy', 'Duck', 'Male', '1937-04-17', '91114444', 'daffyduck@students.com', 'Dunman High', 'Secondary', 1, 'Express', 'Swimming Club', 'Water Polo', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50004', true, 'Scooby', 'Doo', 'Male', '1969-09-13', '91115555', 'scoobydoo@students.com', 'Serangoon Secondary School', 'Secondary', 1, 'Express', 'NPCC', 'Reading comics', 5);
+VALUES ('10004', true, 'Scooby', 'Doo', 'Male', '1969-09-13', '91115555', 'scoobydoo@students.com', 'Serangoon Secondary School', 'Secondary', 1, 'Express', 'NPCC', 'Reading comics', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50005', true, 'Minnie', 'Mouse', 'Female', '1928-11-18', '91116666', 'minniemouse@students.com', 'Mayflower Secondary School', 'Secondary', 1, 'Express', 'Girl Guides', 'Sewing', 5);
+VALUES ('10005', true, 'Minnie', 'Mouse', 'Female', '1928-11-18', '91116666', 'minniemouse@students.com', 'Mayflower Secondary School', 'Secondary', 1, 'Express', 'Girl Guides', 'Sewing', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50006', true, 'Daisy', 'Duck', 'Male', '1937-01-09', '91117777', 'daisyduck@students.com', 'Deyi Secondary School', 'Secondary', 1, 'Express', 'Netball', 'Bowling', 5);
+VALUES ('10006', true, 'Daisy', 'Duck', 'Male', '1937-01-09', '91117777', 'daisyduck@students.com', 'Deyi Secondary School', 'Secondary', 1, 'Express', 'Netball', 'Bowling', 5);
 INSERT INTO student (studentId, isActive, firstName, lastName, gender, dob, phone, email, school, level, year, band, cca, interests, tutorId)
-VALUES ('50007', true, 'Winnie', 'Pooh', 'Male', '1926-10-14', '91118888', 'winniethepooh@students.com', 'Westspring Secondary School', 'Secondary', 1, 'Express', 'Football', 'Collecting honey', 5);
+VALUES ('10007', true, 'Winnie', 'Pooh', 'Male', '1926-10-14', '91118888', 'winniethepooh@students.com', 'Westspring Secondary School', 'Secondary', 1, 'Express', 'Football', 'Collecting honey', 5);
 
 CREATE TABLE grade (
     gradeId VARCHAR(10) NOT NULL,

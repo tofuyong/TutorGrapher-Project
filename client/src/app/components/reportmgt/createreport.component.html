@@ -83,7 +83,7 @@
 <br>
 
 <div class="bottom">
-    <mat-slide-toggle class="slide" name="save" [(ngModel)]="isSaveReport" (change)="save()">
+    <mat-slide-toggle class="slide" name="save" [(ngModel)]="isSaveReport">
         Save a copy of report in account?
     </mat-slide-toggle>
     <button mat-raised-button color="primary" class="button" [routerLink]="['/pdf-report', studentId]"
