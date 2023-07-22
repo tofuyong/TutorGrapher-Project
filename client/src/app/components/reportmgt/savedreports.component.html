@@ -20,8 +20,9 @@
                     <td>{{ i + 1 }}</td>
                     <td>{{ rp.date | date:'d MMM yyyy'}}</td>
                     <td>
-                        <a href="{{rp.reportUrl}}"
-                        target="_blank">{{ rp.studentFirstName }}{{ rp.studentLastName }}{{ rp.reportId }}.pdf</a>
+                        <a (click)="openReport(rp.reportId)"
+                          style="cursor: pointer;"
+                          matTooltip="Retrieve report">{{ rp.studentFirstName }}{{ rp.studentLastName }}{{ rp.reportId }}.pdf</a>
                     </td>
                     <td>
                         <a (click)="confirmDelete(rp.reportId)" style="cursor: pointer;">

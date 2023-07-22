@@ -32,6 +32,15 @@ export class ReportrepositoryComponent implements OnInit {
       });
   }
 
+  openReport(reportId: string): void {
+    this.reportSvc.getReport(reportId).then(blob => {
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }).catch(error => {
+      console.error('Error fetching report:', error);
+    });
+  }
+
   confirmDelete(reportId: string): void {
     const confirmation = window.confirm("Are you sure you want to permanently delete this report?");
     if (confirmation) {

@@ -1,9 +1,17 @@
 package ibf2022.server.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mongodb.client.gridfs.model.GridFSFile;
+
 import ibf2022.server.models.Report;
 import ibf2022.server.models.ReportByTutor;
 import ibf2022.server.service.ReportService;
-import ibf2022.server.service.S3Service;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
@@ -31,7 +40,10 @@ import jakarta.json.JsonObject;
 public class ReportController {
 
     @Autowired
-    private S3Service s3svc;
+    private GridFsTemplate gridFsTemplate;
+
+    @Autowired
+    private GridFsOperations gridFsOperations;
 
     @Autowired
     private ReportService reportSvc;
@@ -43,13 +55,22 @@ public class ReportController {
     }
 
     @GetMapping("/details/{reportId}")
-    public ResponseEntity<Report> getReport(@PathVariable String reportId) {
+    public ResponseEntity<GridFsResource> getReport(@PathVariable String reportId) {
         Report report = reportSvc.getReport(reportId);
-        if (report != null) {
-            return ResponseEntity.ok(report);
-        } else {
+        if (report == null) {
             return ResponseEntity.notFound().build();
         }
+
+        GridFSFile gridFsFile = gridFsOperations.findOne(new Query(Criteria.where("_id").is(report.getReportUrl())));
+    
+        GridFsResource resource = gridFsOperations.getResource(gridFsFile);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + gridFsFile.getFilename());
+        return ResponseEntity.ok()
+            .headers(headers)
+            .contentType(MediaType.parseMediaType(gridFsFile.getMetadata().getString("_contentType")))
+            .body(resource);
+
     }
 
     @GetMapping("/allByTutor")
@@ -73,17 +94,21 @@ public class ReportController {
     @CrossOrigin()
     public ResponseEntity<String> saveReport(@RequestPart MultipartFile report, @RequestPart String studentIdentifier,
             @PathVariable int studentId) {
-        String key = "";
+
+        String fileId = "";
         try {
-            key = s3svc.saveReport(report, studentIdentifier, studentId);
-            String reportUrl = "https://tofuibfb22022.sgp1.digitaloceanspaces.com/reports/" + key;
-            reportSvc.insertReport(reportUrl, studentId);
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Convert MultipartFile to InputStream
+            InputStream io = new ByteArrayInputStream(report.getBytes());
+            // Use GridFsTemplate to save the report in Mongo
+            fileId = gridFsTemplate.store(io, report.getOriginalFilename(), report.getContentType()).toString();
+            // And save the Mongo fileId in SQL for future retrieval
+            reportSvc.insertReport(fileId, studentId);
+            } catch (IOException e) {
+                e.printStackTrace();
         }
 
         JsonObject payload = Json.createObjectBuilder()
-                .add("reportKey", key)
+                .add("fileId", fileId)
                 .build();
 
         return ResponseEntity.ok(payload.toString());
@@ -91,6 +116,15 @@ public class ReportController {
 
     @DeleteMapping("/delete/{reportId}")
     public ResponseEntity<Boolean> deleteReport(@PathVariable String reportId) {
+        Report report = reportSvc.getReport(reportId);
+        if (report == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Delete the file from MongoDB GridFS
+        gridFsTemplate.delete(new Query(Criteria.where("_id").is(report.getReportUrl())));
+
+        // Delete the report from mySQL
         boolean isDeleted = reportSvc.deleteReport(reportId);
         if (isDeleted) {
             return ResponseEntity.ok(true);

@@ -29,9 +29,14 @@ export class ReportService {
     return firstValueFrom(this.httpClient.get(this.GET_ALL_REPORTS_BY_STUDENT_URL, { params, responseType: 'json' }));
   }
 
-  getReport(reportId: string): Promise<any> {
+  // getReport(reportId: string): Promise<any> {
+  //   const url = this.GET_REPORT_URL.replace("{reportId}", reportId);
+  //   return firstValueFrom(this.httpClient.get(url, { responseType: 'json' }));
+  // }
+
+  getReport(reportId: string): Promise<Blob> {
     const url = this.GET_REPORT_URL.replace("{reportId}", reportId);
-    return firstValueFrom(this.httpClient.get(url, { responseType: 'json' }));
+    return firstValueFrom(this.httpClient.get(url, { responseType: 'blob' }));
   }
 
   deleteReport(reportId: string): Promise<any> {
