@@ -70,7 +70,6 @@ public class ReportController {
             .headers(headers)
             .contentType(MediaType.parseMediaType(gridFsFile.getMetadata().getString("_contentType")))
             .body(resource);
-
     }
 
     @GetMapping("/allByTutor")

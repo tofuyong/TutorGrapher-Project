@@ -10,7 +10,8 @@
 
 .background {
     background: url('/assets/images/main-greypurpleorange.jpg');
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 100vh;
     display: flex;
     flex-direction: column;

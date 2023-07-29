@@ -19,36 +19,36 @@
 [![Spring Boot](./images/springboot.svg)](https://spring.io/projects/spring-boot)
 
 ## Getting Started
-You need to have git, angular cli, maven, and an SQL client installed on your machine to run these commands.
+You need to have git, angular cli, maven, mongoDB and an SQL client installed on your machine to run these commands.
 
 Here are the steps for testing the app locally:
-1. **Clone the repo.** In your terminal, use the git clone command:
+1. **Clone the repo.** In your terminal, use the git clone command. This command creates a local copy of the project on your machine.
       ```sh
       git clone https://github.com/tofuyong/TutorGrapher-Project.git
       ```
-This command creates a local copy of the project on your machine.
 
-2. **Get a free SendGrid API key** at https://docs.sendgrid.com/ui/account-and-settings/api-keys. Enter your API key in application.properties. 
+2. **Get a free SendGrid API key** at https://docs.sendgrid.com/ui/account-and-settings/api-keys. Enter your API key in application.properties. Replace ${spring.sendgrid.api-key} with your API key
       ```sh
       spring.sendgrid.api-key=${spring.sendgrid.api-key}
       ```
-  Replace ${spring.sendgrid.api-key} with your API key
 
-3. **Run the SQL script.** Inside the sql-script folder, you will find the TutorGrapherDB.sql script. Run it to create the tutorgrapher database locally. This creates a tutor (Tutor ID: 1) and assigns 5 students to this account.
+3. **Run the SQL script.** Ensure that you have an SQL client installed. Inside the sql-script folder, you will find the TutorGrapherDB.sql script. Run it to create the tutorgrapher database locally. This creates a tutor (Tutor ID: 1) and assigns 5 students to this account.
 
-4. **Start the client app.** Navigate to the client folder in terminal and run:
+4. **Install mongoDB.** Ensure that you have mongoDB installed.
+
+5. **Start the client app.** Navigate to the client folder in terminal and run:
       ```sh
       ng serve --proxy-config proxy-config.js
       ```
 
-5. **Start the server app.** Navigate to the server folder in terminal and run:
+6. **Start the server app.** Navigate to the server folder in terminal and run:
       ```sh
       mvn clean spring-boot:run
       ```
   
-6. **Open the app in your browser**. Visit http://localhost:4200/
+7. **Open the app in your browser**. Visit http://localhost:4200/
 
-7. **Log in and test the app.** Use Tutor ID 1 to log in.
+8. **Log in and test the app.** Use Tutor ID 1 to log in.
 
 ## Usage
 <div align="center">
@@ -83,12 +83,17 @@ This command creates a local copy of the project on your machine.
   <br>
 
   <img src="images/15 Create Report.png" alt="Grade Analysis"> 
-  <p>On the Create Report page, tutors see a mock up of the report card. There are fields like 'Title', 'Date', 'Academic Feedback' and 'Conduct Feedback' for tutors to fill up with customised input for each student. The 'Generate Report Card' button at the bottom of the page creates a pdf of this Report Card.</p>
+  <p>On the Create Report page, tutors see a mock up of the report card. There are fields like 'Title', 'Date', 'Academic Feedback' and 'Conduct Feedback' for tutors to fill up with customised inputs for each student. The 'Generate Report Card' button at the bottom of the page creates a pdf of this Report Card.</p>
 
   <br>
 
-  <img src="images/16 Generated PDF.png" alt="Generated PDF"> 
+  <img src="images/16 Generated PDF.png" alt="Generated PDF" width="500"> 
   <p>A generated report card looks like this. This is a PDF that can be saved and sent to parents.</p>
+
+  <br>
+
+  <img src="images/19 Saved Reports.png" alt="Saved Reports"> 
+  <p>Saved reports can be retrieved from the report repository.</p>
 
   <br>
 </div>
